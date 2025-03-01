@@ -1,6 +1,8 @@
+package models;
+
 import java.util.Objects;
 
-class Subtask extends Task {
+public class Subtask extends Task {
     private final int epicId; // идентификатор epic
 
     public Subtask(String title, String description, int epicId) {

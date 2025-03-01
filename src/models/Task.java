@@ -1,6 +1,8 @@
+package models;
+
 import java.util.Objects;
 
-class Task {
+public class Task {
     private String title; // название
     private String description; // описание
     private int id; // индентификатор задач

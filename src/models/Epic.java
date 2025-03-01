@@ -1,8 +1,10 @@
+package models;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-class Epic extends Task {
+public class Epic extends Task {
 
     private final List<Integer> subtasks; // подзадачи
 
