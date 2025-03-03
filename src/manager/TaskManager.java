@@ -1,4 +1,5 @@
 package manager;
+
 import models.*;
 
 
@@ -26,39 +27,36 @@ public class TaskManager {
     }
 
     // создание задач, подзадач, epic
-    public Task createTask(Task task) {
+    public void createTask(Task task) {
         task.setId(idCounter++);
         tasks.put(task.getId(), task);
-        return task;
     }
 
-    public Subtask createSubtask(Subtask subtask) {
+    public void createSubtask(Subtask subtask) {
         subtask.setId(idCounter++);
         subtasks.put(subtask.getId(), subtask);
         if (epics.containsKey(subtask.getEpicId())) {
             epics.get(subtask.getEpicId()).addSubtask(subtask.getId());
             updateEpicStatus(subtask.getEpicId());
         }
-        return subtask;
     }
 
-    public Epic createEpic(Epic epic) {
+    public void createEpic(Epic epic) {
         epic.setId(idCounter++);
         epics.put(epic.getId(), epic);
-        return epic;
     }
 
     // получение id задачи, подзадачи, epic
     public Task getTaskById(int id) {
-        return (Task) tasks.get(id);
+        return tasks.get(id);
     }
 
     public Subtask getSubtaskByID(int id) {
-        return (Subtask) subtasks.get(id);
+        return subtasks.get(id);
     }
 
     public Epic getEpicById(int id) {
-        return (Epic) epics.get(id);
+        return epics.get(id);
     }
 
     // обновление задач и подзадач
@@ -84,7 +82,7 @@ public class TaskManager {
     }
 
     public void deleteSubtask(int id) {
-        Subtask subtask = (Subtask) subtasks.remove(id);
+        Subtask subtask = subtasks.remove(id);
         if (subtask != null) {
             Epic epic = epics.get(subtask.getEpicId());
             if (epic != null) {
@@ -111,7 +109,7 @@ public class TaskManager {
     // обновление статуса
     private void updateEpicStatus(int epicId) {
         if (epics.containsKey(epicId)) {
-            Epic epic = (Epic) epics.get(epicId);
+            Epic epic = epics.get(epicId);
             List<Subtask> associatedSubtasks = getSubtasksByEpicId(epicId);
 
             if (associatedSubtasks.isEmpty()) {

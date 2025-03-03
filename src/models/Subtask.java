@@ -27,4 +27,15 @@ public class Subtask extends Task {
     public int hashCode() {
         return Objects.hash(super.hashCode(), epicId);
     }
+
+    @Override
+    public String toString() {
+        return "Subtask{" +
+                "title='" + getTitle() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", id=" + getId() +
+                ", status=" + getStatus() +
+                ", epicId=" + epicId +
+                '}';
+    }
 }
