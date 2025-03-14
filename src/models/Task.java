@@ -14,14 +14,6 @@ public class Task {
         this.status = TaskStatus.NEW; // статус по-умолчанию
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -30,12 +22,20 @@ public class Task {
         this.title = title;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public TaskStatus getStatus() {
