@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import models.Epic;
 import org.junit.jupiter.api.BeforeEach;
