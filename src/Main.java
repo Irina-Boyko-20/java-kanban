@@ -60,23 +60,35 @@ public class Main {
         taskManager.createEpic(epic2);
 
         // Проверка статуса epic, подзадачи и задачи
-        System.out.println("Статус задачи \"" + task1.getTitle() + "\": " + taskManager.getTaskById(task1.getId()).getStatus());
-        System.out.println("Статус epic \"" + epic1.getTitle() + "\": " + taskManager.getEpicById(epic1.getId()).getStatus());
-        System.out.println("Статус подзадачи \"" + subtask2.getTitle() + "\": " + taskManager.getSubtaskByID(subtask2.getId()).getStatus());
+        System.out.printf("Статус задачи \"%s\": %s\n",
+                            task1.getTitle(),
+                            taskManager.getTaskById(task1.getId()).getStatus());
+        System.out.printf("Статус epic \"%s\": %s\n",
+                           epic1.getTitle(),
+                           taskManager.getEpicById(epic1.getId()).getStatus());
+        System.out.printf("Статус подзадачи \"%s\": %s\n",
+                            subtask2.getTitle(),
+                            taskManager.getSubtaskByID(subtask2.getId()).getStatus());
 
         // Обновление статуса подзадач и проверка статуса epic
         subtask2.setStatus(TaskStatus.IN_PROGRESS);
         taskManager.updateSubtask(subtask2);
-        System.out.println("Статус epic после обновления подзадачи \"" + subtask2.getTitle() + "\": " + taskManager.getEpicById(epic1.getId()).getStatus());
+        System.out.printf("Статус epic после обновления подзадачи \"%s\": %s\n",
+                            subtask2.getTitle(),
+                            taskManager.getEpicById(epic1.getId()).getStatus());
 
         subtask3.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask3);
-        System.out.println("Статус epic после обновления подзадачи \"" + subtask3.getTitle() + "\": " + taskManager.getEpicById(epic1.getId()).getStatus());
+        System.out.printf("Статус epic после обновления подзадачи \"%s\": %s\n",
+                            subtask3.getTitle(),
+                            taskManager.getEpicById(epic1.getId()).getStatus());
 
         // Обновление статуса задачи и проверка статуса
         task1.setStatus(TaskStatus.DONE);
         taskManager.updateTask(task1);
-        System.out.println("Статус задачи \"" + task1.getTitle() + "\" после завершения: " + taskManager.getTaskById(task1.getId()).getStatus());
+        System.out.printf("Статус задачи \"%s\" после завершения: %s\n",
+                            task1.getTitle(),
+                            taskManager.getTaskById(task1.getId()).getStatus());
 
         printAllTasks(taskManager);
 
@@ -92,16 +104,22 @@ public class Main {
         // Обновление статуса подзадач и проверка статуса epic
         subtask2.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask2);
-        System.out.println("Статус epic после обновления подзадачи \"" + subtask2.getTitle() + "\": " + taskManager.getEpicById(epic1.getId()).getStatus());
+        System.out.printf("Статус epic после обновления подзадачи \"%s\": %s\n",
+                            subtask2.getTitle(),
+                            taskManager.getEpicById(epic1.getId()).getStatus());
 
         subtask4.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask3);
-        System.out.println("Статус epic после обновления подзадачи \"" + subtask3.getTitle() + "\": " + taskManager.getEpicById(epic1.getId()).getStatus());
+        System.out.printf("Статус epic после обновления подзадачи \"%s\": %s\n",
+                            subtask3.getTitle(),
+                            taskManager.getEpicById(epic1.getId()).getStatus());
 
         // Обновление статуса подзадачи и проверка статуса epic
         epic1.setStatus(TaskStatus.DONE);
         taskManager.updateEpic(epic1);
-        System.out.println("Статус epic \"" + epic1.getTitle() + "\" после завершения всех подзадач: " + taskManager.getEpicById(epic1.getId()).getStatus());
+        System.out.printf("Статус epic \"%s\" после завершения всех подзадач: %s\n",
+                            epic1.getTitle(),
+                            taskManager.getEpicById(epic1.getId()).getStatus());
 
         // Удаление всех задач, epic и подзадач
         taskManager.deleteEpic(epic2.getId());

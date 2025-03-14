@@ -183,13 +183,13 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldManagersReturnInitializedInstances() {
+    public void shouldManagersReturnInstances() {
         HistoryManager historyManager = Managers.getDefaultHistory();
         assertNotNull(historyManager);
     }
 
     @Test
-    public void shouldInMemoryTaskManagerAddsDifferentTypesOfTasks() {
+    public void shouldManagerAddVariedTaskTypes() {
         Task task = createTask();
         taskManager.createTask(task);
         Epic epic = createEpic();
@@ -207,7 +207,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldTasksWithSameIdDoNotConflict() {
+    public void shouldTasksNotConflictById() {
         Task task1 = new Task("Тест задачи 2", "Описание задачи 2.");
         Task task = createTask();
         taskManager.createTask(task);
@@ -220,7 +220,7 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldTaskImmutabilityWhenAdding() {
+    public void shouldTaskStayImmutableOnAdd() {
         Task task = createTask();
         taskManager.createTask(task);
         Task retrievedTask = taskManager.getTaskById(task.getId());
