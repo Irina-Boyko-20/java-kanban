@@ -25,7 +25,7 @@ class TaskTest {
     }
 
     @Test
-    public void SetIdTask() {
+    public void setIdTask() {
         // Устанавливаем идентификатор задачи
         task.setId(1);
         assertEquals(1, task.getId());

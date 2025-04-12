@@ -26,7 +26,7 @@ class SubtaskTest {
     }
 
     @Test
-    public void GetEpicId() {
+    public void getEpicId() {
         // Проверяем, что идентификатор эпика корректно возвращается
         assertEquals(1, subtask.getEpicId());
     }

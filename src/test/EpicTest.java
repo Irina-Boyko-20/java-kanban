@@ -17,7 +17,7 @@ class EpicTest {
     }
 
     @Test
-    public void AddEpic() {
+    public void addEpic() {
         // Проверяем, что список пустой
         assertEquals(0, epic.getSubtasks().size(), "Список не пустой");
 
@@ -32,7 +32,7 @@ class EpicTest {
     }
 
     @Test
-    public void GetSubtasksReturnsList() {
+    public void getSubtasksReturnsList() {
         epic.addSubtask(1);
         epic.addSubtask(2);
 
