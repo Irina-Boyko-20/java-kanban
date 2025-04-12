@@ -235,7 +235,7 @@ public class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldNotRetainOldIdsInSubtasks() {
+    public void shouldClearOldIds() {
         Epic epic = createEpic();
         taskManager.createEpic(epic);
         Subtask subtask = createSubtask(epic);
