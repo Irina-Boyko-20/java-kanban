@@ -1,6 +1,7 @@
 package test;
 
 import manager.HistoryManager;
+import manager.InMemoryHistoryManager;
 import manager.InMemoryTaskManager;
 import manager.Managers;
 import models.Epic;
@@ -17,6 +18,7 @@ import java.util.List;
 class InMemoryTaskManagerTest {
 
     private InMemoryTaskManager taskManager;
+    private InMemoryHistoryManager historyManager;
 
     public Task createTask() {
         return new Task("Тест задачи", "Описание задачи.");
@@ -33,6 +35,7 @@ class InMemoryTaskManagerTest {
     @BeforeEach
     public void setUp() {
         taskManager = new InMemoryTaskManager();
+        historyManager = new InMemoryHistoryManager();
     }
 
 
@@ -110,6 +113,7 @@ class InMemoryTaskManagerTest {
         taskManager.deleteTask(task.getId());
 
         assertNull(taskManager.getTaskById(task.getId()));
+        assertEquals(0, historyManager.getHistory().size());
     }
 
     @Test
@@ -122,6 +126,7 @@ class InMemoryTaskManagerTest {
 
         assertNull(taskManager.getEpicById(epic.getId()));
         assertNull(taskManager.getSubtaskByID(subtask.getId()));
+        assertEquals(0, historyManager.getHistory().size());
     }
 
     @Test
@@ -230,4 +235,15 @@ class InMemoryTaskManagerTest {
         assertEquals(task.getId(), retrievedTask.getId());
     }
 
+    @Test
+    public void shouldNotRetainOldIdsInSubtasks() {
+        Epic epic = createEpic();
+        taskManager.createEpic(epic);
+        Subtask subtask = createSubtask(epic);
+        taskManager.createSubtask(subtask);
+
+        taskManager.deleteSubtask(subtask.getId());
+
+        assertFalse(epic.getSubtasks().contains(subtask.getId()));
+    }
 }

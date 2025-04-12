@@ -47,25 +47,22 @@ public class Main {
         Subtask subtask1 = new Subtask("Домбай", "Где можно покушать и погулять", epic1.getId());
         taskManager.createSubtask(subtask1);
 
-        Subtask subtask2 = new Subtask("Экскурсия", "Посмотреть экскурсии рядом с Нальчиком и Пятигоском", epic1.getId());
+        Subtask subtask2 = new Subtask("Экскурсия", "Посмотреть экскурсии рядом с Нальчиком и Пятигорском", epic1.getId());
         taskManager.createSubtask(subtask2);
 
         Subtask subtask3 = new Subtask("Термальные источники", "Составить список термальных источников", epic1.getId());
         taskManager.createSubtask(subtask3);
-
-        Subtask subtask4 = new Subtask("Вещи", "Составить список вещей для путешествия", epic1.getId());
-        taskManager.createSubtask(subtask4);
 
         Epic epic2 = new Epic("Обучение", "За неделю прочитать теорию 5-ого спринта");
         taskManager.createEpic(epic2);
 
         // Проверка статуса epic, подзадачи и задачи
         System.out.printf("Статус задачи \"%s\": %s\n",
-                            task1.getTitle(),
-                            taskManager.getTaskById(task1.getId()).getStatus());
+                            task2.getTitle(),
+                            taskManager.getTaskById(task2.getId()).getStatus());
         System.out.printf("Статус epic \"%s\": %s\n",
-                           epic1.getTitle(),
-                           taskManager.getEpicById(epic1.getId()).getStatus());
+                           epic2.getTitle(),
+                           taskManager.getEpicById(epic2.getId()).getStatus());
         System.out.printf("Статус подзадачи \"%s\": %s\n",
                             subtask2.getTitle(),
                             taskManager.getSubtaskByID(subtask2.getId()).getStatus());
@@ -92,7 +89,6 @@ public class Main {
 
         printAllTasks(taskManager);
 
-
         // Удаление задачи и подзадачи, проверка списка подзадач epic
         taskManager.deleteSubtask(subtask1.getId());
         taskManager.deleteTask(task2.getId());
@@ -108,7 +104,6 @@ public class Main {
                             subtask2.getTitle(),
                             taskManager.getEpicById(epic1.getId()).getStatus());
 
-        subtask4.setStatus(TaskStatus.DONE);
         taskManager.updateSubtask(subtask3);
         System.out.printf("Статус epic после обновления подзадачи \"%s\": %s\n",
                             subtask3.getTitle(),
@@ -120,6 +115,10 @@ public class Main {
         System.out.printf("Статус epic \"%s\" после завершения всех подзадач: %s\n",
                             epic1.getTitle(),
                             taskManager.getEpicById(epic1.getId()).getStatus());
+
+        taskManager.deleteEpic(epic1.getId());
+
+        printAllTasks(taskManager);
 
         // Удаление всех задач, epic и подзадач
         taskManager.deleteEpic(epic2.getId());
