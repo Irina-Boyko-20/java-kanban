@@ -1,6 +1,5 @@
-package test;
+package models;
 
-import models.Epic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EpicTest {
+public class EpicTest {
     private Epic epic;
 
     @BeforeEach
@@ -40,5 +39,4 @@ class EpicTest {
         List<Integer> subtasks = epic.getSubtasks();
         assertEquals(2, subtasks.size());
     }
-
 }

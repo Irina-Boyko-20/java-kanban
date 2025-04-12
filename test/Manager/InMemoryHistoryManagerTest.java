@@ -1,4 +1,4 @@
-package test;
+package Manager;
 
 import manager.InMemoryHistoryManager;
 import models.Epic;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class InMemoryHistoryManagerTest {
+public class InMemoryHistoryManagerTest {
     private InMemoryHistoryManager historyManager;
 
     private Task task1;
@@ -47,7 +47,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void shouldAddDuplicateTask() {
+    public void shouldAddDuplicateTask() {
         task1 = new Task("Тест задачи №1", "Описание задачи №1.");
         task2 = new Task("Тест задачи №1", "Обновлённое описание задачи №1.");
 
@@ -63,7 +63,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    void shouldDeleteTask() {
+    public void shouldDeleteTask() {
         historyManager.add(task1);
         historyManager.add(epic2);
 

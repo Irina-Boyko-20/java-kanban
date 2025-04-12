@@ -1,4 +1,4 @@
-package test;
+package Manager;
 
 import manager.HistoryManager;
 import manager.InMemoryHistoryManager;
@@ -15,8 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-class InMemoryTaskManagerTest {
-
+public class InMemoryTaskManagerTest {
     private InMemoryTaskManager taskManager;
     private InMemoryHistoryManager historyManager;
 
