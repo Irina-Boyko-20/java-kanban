@@ -1,6 +1,5 @@
-package test;
+package models;
 
-import models.Epic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EpicTest {
+public class EpicTest {
     private Epic epic;
 
     @BeforeEach
@@ -17,7 +16,7 @@ class EpicTest {
     }
 
     @Test
-    public void AddEpic() {
+    public void addEpic() {
         // Проверяем, что список пустой
         assertEquals(0, epic.getSubtasks().size(), "Список не пустой");
 
@@ -32,7 +31,7 @@ class EpicTest {
     }
 
     @Test
-    public void GetSubtasksReturnsList() {
+    public void getSubtasksReturnsList() {
         epic.addSubtask(1);
         epic.addSubtask(2);
 
@@ -40,5 +39,4 @@ class EpicTest {
         List<Integer> subtasks = epic.getSubtasks();
         assertEquals(2, subtasks.size());
     }
-
 }

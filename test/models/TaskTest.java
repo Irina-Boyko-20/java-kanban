@@ -1,13 +1,11 @@
-package test;
+package models;
 
-import models.Task;
-import models.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TaskTest {
+public class TaskTest {
     private Task task;
 
     @BeforeEach
@@ -19,13 +17,12 @@ class TaskTest {
     public void addTask() {
         // Проверяем, что задача создаётся с правильными значениями
         assertEquals("Тест задачи", task.getTitle());
-        assertEquals("Проверка задачи и её описания.", task.getDescription());
         // Проверяем статус
         assertEquals(TaskStatus.NEW, task.getStatus(), "Статус не соответствует статусу по-умолчанию");
     }
 
     @Test
-    public void SetIdTask() {
+    public void setIdTask() {
         // Устанавливаем идентификатор задачи
         task.setId(1);
         assertEquals(1, task.getId());

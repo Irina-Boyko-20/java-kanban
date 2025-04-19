@@ -1,13 +1,11 @@
-package test;
+package models;
 
-import models.Subtask;
-import models.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SubtaskTest {
+public class SubtaskTest {
     private Subtask subtask;
 
     @BeforeEach
@@ -26,7 +24,7 @@ class SubtaskTest {
     }
 
     @Test
-    public void GetEpicId() {
+    public void getEpicId() {
         // Проверяем, что идентификатор эпика корректно возвращается
         assertEquals(1, subtask.getEpicId());
     }
