@@ -69,7 +69,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             case "TASK" -> {
                 Task task = new Task(name, description);
                 task.setId(Integer.parseInt(id));
-                
                 task.setStatus(TaskStatus.valueOf(status.toUpperCase()));
                 return task;
             }
