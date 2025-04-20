@@ -46,13 +46,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     protected static Task fromString(String value) {
-        String[] arrayValues = value.split(",");
-        String id = arrayValues[0];
-        String type = arrayValues[1];
-        String name = arrayValues[2];
-        String status = arrayValues[3];
-        String description = arrayValues[4];
-        Integer epicId = type.equals(TaskType.SUBTASK.toString()) ? Integer.valueOf(arrayValues[5]) : null;
+        String[] taskData = value.split(",");
+        String id = taskData[0];
+        String type = taskData[1];
+        String name = taskData[2];
+        String status = taskData[3];
+        String description = taskData[4];
+        Integer epicId = type.equals(TaskType.SUBTASK.toString()) ? Integer.valueOf(taskData[5]) : null;
         switch (type) {
             case "EPIC" -> {
                 Epic epic = new Epic(name, description);
@@ -69,6 +69,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             case "TASK" -> {
                 Task task = new Task(name, description);
                 task.setId(Integer.parseInt(id));
+                
                 task.setStatus(TaskStatus.valueOf(status.toUpperCase()));
                 return task;
             }
