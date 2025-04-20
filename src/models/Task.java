@@ -65,10 +65,11 @@ public class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
+                "id=" + id + '\'' +
+                ", type = '" + TaskType.TASK + '\'' +
+                ", title='" + title + '\'' +
+                ", status=" + status + '\'' +
+                ", description='" + description +
                 '}';
     }
 }

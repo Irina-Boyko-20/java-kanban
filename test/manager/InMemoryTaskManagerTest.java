@@ -1,9 +1,5 @@
-package Manager;
+package manager;
 
-import manager.HistoryManager;
-import manager.InMemoryHistoryManager;
-import manager.InMemoryTaskManager;
-import manager.Managers;
 import models.Epic;
 import models.Subtask;
 import models.Task;
