@@ -1,3 +1,4 @@
+import manager.FileBackedTaskManager;
 import manager.InMemoryTaskManager;
 import manager.Managers;
 import manager.TaskManager;
@@ -5,6 +6,8 @@ import models.Epic;
 import models.Subtask;
 import models.Task;
 import models.TaskStatus;
+
+import java.io.File;
 
 public class Main {
 
@@ -33,6 +36,8 @@ public class Main {
     public static void main(String[] args) {
         InMemoryTaskManager taskManager = new InMemoryTaskManager();
         TaskManager taskManagers = Managers.getDefault();
+        File file = new File("tasks.csv");
+        FileBackedTaskManager backedTaskManager = new FileBackedTaskManager(file);
 
         Task task1 = new Task("Кружка", "Забрать термокружку в новом Виогеме");
         taskManager.createTask(task1);
@@ -55,6 +60,19 @@ public class Main {
 
         Epic epic2 = new Epic("Обучение", "За неделю прочитать теорию 5-ого спринта");
         taskManager.createEpic(epic2);
+
+        //добавление задачи в файл
+        backedTaskManager.createTask(task1);
+
+        // Получаем задачу по ID и выводим ее на экран
+        Task retrievedTask = backedTaskManager.getTaskById(task1.getId());
+        System.out.println("Полученная задача: " + retrievedTask);
+
+        // Загружаем данные из файла
+        backedTaskManager.loadFromFile(file);
+
+        // Проверяем историю задач в файле
+        System.out.println("История задач: " + backedTaskManager.getHistory());
 
         // Проверка статуса epic, подзадачи и задачи
         System.out.printf("Статус задачи \"%s\": %s\n",
