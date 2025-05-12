@@ -16,16 +16,16 @@ public class InMemoryTaskManager implements TaskManager {
     protected Set<Task> prioritizedTasks;
 
     public InMemoryTaskManager() {
-        prioritizedTasks = new TreeSet<>((Task o1, Task o2) -> {
-            if (o1.getStartTime() != null && o2.getStartTime() != null) {
-                if (o1.getStartTime().isAfter(o2.getStartTime())) {
+        prioritizedTasks = new TreeSet<>((Task task1, Task task2) -> {
+            if (task1.getStartTime() != null && task2.getStartTime() != null) {
+                if (task1.getStartTime().isAfter(task2.getStartTime())) {
                     return 1;
-                } else if (o1.getStartTime() == (o2.getStartTime())) {
+                } else if (task1.getStartTime() == (task2.getStartTime())) {
                     return -1;
                 }
-            } else if (o1.getStartTime() == null && o2.getStartTime() != null) {
+            } else if (task1.getStartTime() == null && task2.getStartTime() != null) {
                 return 1;
-            } else if (o1.getStartTime() != null && o2.getStartTime() == null) {
+            } else if (task1.getStartTime() != null && task2.getStartTime() == null) {
                 return -1;
             }
             return -1;

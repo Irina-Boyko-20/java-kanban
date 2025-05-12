@@ -187,7 +187,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void shouldCreateAndDeleteEpicWithSubtasks() {
+    public void testCreateAndDeleteEpicWithSubtasks() {
         manager.deleteAllTasks();
         Epic epic = createEpic();
         manager.createEpic(epic);
