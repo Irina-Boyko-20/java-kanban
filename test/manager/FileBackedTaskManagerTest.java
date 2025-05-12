@@ -15,25 +15,12 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileBackedTaskManagerTest {
-    private FileBackedTaskManager manager;
-    private File testFile;
-
-    protected Subtask createSubtask(int epicId) {
-        return new Subtask("name1", "description1", epicId);
-    }
-
-    protected Epic createEpic() {
-        return new Epic("name1", "description1");
-    }
-
-    protected Task createTask() {
-        return new Task("name1", "description1");
-    }
+public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
+    File testFile;
 
     @BeforeEach
-    void setUp() {
-        testFile = new File("test_task.csv");
+    void setUp() throws IOException {
+        testFile = File.createTempFile("test_task", "csv");
         manager = new FileBackedTaskManager(testFile);
     }
 
@@ -47,22 +34,20 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    void shouldLoadEmptyFile() throws ManagerSaveException {
-        manager.save();
+    void shouldLoadEmptyFile() {
+        manager.deleteAllTasks();
+        manager.loadFromFile(testFile);
 
-        FileBackedTaskManager loadedManager = new FileBackedTaskManager(testFile);
-        loadedManager.loadFromFile(testFile);
-
-        assertTrue(loadedManager.getAllTask().isEmpty());
-        assertTrue(loadedManager.getAllEpics().isEmpty());
-        assertTrue(loadedManager.getAllSubtasks().isEmpty());
+        assertTrue(manager.getAllTask().isEmpty());
+        assertTrue(manager.getAllEpics().isEmpty());
+        assertTrue(manager.getAllSubtasks().isEmpty());
     }
 
     @Test
     void shouldSaveAndLoadCorrectly() {
         Task task = createTask();
         Epic epic = createEpic();
-        Subtask subtask = createSubtask(epic.getId());
+        Subtask subtask = createSubtask(epic);
 
         manager.createTask(task);
         manager.createEpic(epic);
@@ -74,12 +59,9 @@ public class FileBackedTaskManagerTest {
         loadedManager.loadFromFile(testFile);
 
         assertEquals(1, loadedManager.getAllTask().size());
-        assertEquals(1, loadedManager.getAllEpics().size());
-        assertEquals(1, loadedManager.getAllSubtasks().size());
-
-        assertEquals(task.getTitle(), loadedManager.getAllTask().get(0).getTitle());
-        assertEquals(subtask.getTitle(), loadedManager.getAllTask().get(0).getTitle());
-        assertEquals(epic.getTitle(), loadedManager.getAllEpics().get(0).getTitle());
+        assertEquals(task.getTitle(), loadedManager.getAllTask().getFirst().getTitle());
+        assertEquals(subtask.getTitle(), loadedManager.getAllSubtasks().getFirst().getTitle());
+        assertEquals(epic.getTitle(), loadedManager.getAllEpics().getFirst().getTitle());
     }
 
     @Test

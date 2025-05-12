@@ -1,17 +1,31 @@
 package models;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task {
     private String title; // название
     private String description; // описание
-    private int id; // индентификатор задач
+    private int id; // идентификатор задач
     private TaskStatus status; // статус задач
+    private Duration duration; // продолжительность задачи в минутах
+    private LocalDateTime startTime; // дата и время начала выполнения задания
+
+    public Task(String title, String description, String startTime, String duration) {
+        this.title = title;
+        this.description = description;
+        this.status = TaskStatus.NEW; // статус по-умолчанию
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
+        this.startTime = LocalDateTime.parse(startTime, formatter);
+        this.duration = Duration.ofMinutes(Long.parseLong(duration));
+    }
 
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.status = TaskStatus.NEW; // статус по-умолчанию
+        this.status = TaskStatus.NEW;
     }
 
     public String getTitle() {
@@ -46,6 +60,25 @@ public class Task {
         this.status = status;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plus(duration);
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -64,12 +97,29 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id + '\'' +
-                ", type = '" + TaskType.TASK + '\'' +
-                ", title='" + title + '\'' +
-                ", status=" + status + '\'' +
-                ", description='" + description +
-                '}';
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
+        if (getStartTime() == null) {
+            return "Task {" +
+                    "id= " + id +
+                    ", type = " + TaskType.TASK +
+                    ", status= " + status +
+                    ", title= '" + title + '\'' +
+                    ", description= '" + description + '\'' +
+                    ", startTime= " + "n/a" +
+                    ", duration= " + "n/a" +
+                    ", endTime= " + "n/a" +
+                    '}';
+        } else {
+            return "Task {" +
+                    "id= " + id +
+                    ", type = " + TaskType.TASK +
+                    ", title= '" + title + '\'' +
+                    ", status= " + status +
+                    ", description= '" + description + '\'' +
+                    ", startTime= " + startTime.format(formatter) +
+                    ", duration= " + duration +
+                    ", endTime= " + getEndTime().format(formatter) +
+                    '}';
+        }
     }
 }

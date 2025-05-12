@@ -24,15 +24,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             writer.write("id,type,name,description,status,epic\n");
 
             for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
-                writer.write(getTaskById(entry.getKey()).toString() + "\n");
+                writer.write(taskDateToString(getTaskById(entry.getKey())) + "\n");
             }
             writer.write("\n"); //отделение задач
             for (Map.Entry<Integer, Epic> entry : epics.entrySet()) {
-                writer.write(getEpicById(entry.getKey()).toString() + "\n");
+                writer.write(epicDateToString(getEpicById(entry.getKey())) + "\n");
             }
             writer.write("\n"); //отделение эпиков
             for (Map.Entry<Integer, Subtask> entry : subtasks.entrySet()) {
-                writer.write(getSubtaskByID(entry.getKey()).toString() + "\n");
+                writer.write(subtaskDateToString(getSubtaskByID(entry.getKey())) + "\n");
             }
             writer.write("\n"); //отделение подзадач
 
@@ -49,8 +49,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String[] taskData = value.split(",");
         String id = taskData[0];
         String type = taskData[1];
-        String name = taskData[2];
-        String status = taskData[3];
+        String status = taskData[2];
+        String name = taskData[3];
         String description = taskData[4];
         Integer epicId = type.equals(TaskType.SUBTASK.toString()) ? Integer.valueOf(taskData[5]) : null;
         switch (type) {
@@ -84,10 +84,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         for (String id : ids) {
             history.add(Integer.valueOf(id));
         }
+
         return history;
     }
 
     public void loadFromFile(File file) {
+        if (file.length() == 0) {
+            return;
+        }
         FileBackedTaskManager backedTaskManager;
         String line = "";
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader((file)))) {
@@ -100,13 +104,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
                 String[] arrayLine = line.split(",");
 
-                if (arrayLine[1].equalsIgnoreCase("TASK")) {
+                if (arrayLine[2].equalsIgnoreCase("TASK")) {
                     Task task = fromString(line);
                     tasks.put(Objects.requireNonNull(task).getId(), task);
-                } else if (arrayLine[1].equalsIgnoreCase("EPIC")) {
+                } else if (arrayLine[2].equalsIgnoreCase("EPIC")) {
                     Task task = fromString(line);
                     epics.put(Objects.requireNonNull(task).getId(), (Epic) task);
-                } else if (arrayLine[1].equalsIgnoreCase("SUBTASK")) {
+                } else if (arrayLine[2].equalsIgnoreCase("SUBTASK")) {
                     Task task = fromString(line);
                     subtasks.put(Objects.requireNonNull(task).getId(), (Subtask) task);
                 }
@@ -115,6 +119,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         } catch (IOException exception) {
             throw new ManagerSaveException("Ошибка при загрузке данных.");
         }
+
+        prioritizedTasks.addAll(tasks.values());
+        prioritizedTasks.addAll(subtasks.values());
+
         List<Integer> listForHistory = new ArrayList<>();
         if (!line.isEmpty()) {
             listForHistory = historyFromString(line);
@@ -142,7 +150,60 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         for (Task task : manager.getHistory()) {
             idOfHistory.append(task.getId()).append(",");
         }
+
         return idOfHistory.toString();
+    }
+
+    public String taskDateToString(Task task) {
+        if (task.getStartTime() == null) {
+            return task.getId() + ",TASK, "
+                    + task.getStatus() + ", "
+                    + task.getTitle() + ", "
+                    + task.getDescription()
+                    + ",n/a,n/a,n/a,\n";
+        } else
+            return task.getId() + ",TASK, "
+                    + task.getStatus() + ", "
+                    + task.getTitle() + ", "
+                    + task.getDescription() + ", "
+                    + task.getStartTime() + ", "
+                    + task.getDuration() + ", "
+                    + task.getEndTime() + ",\n";
+    }
+
+    public String epicDateToString(Epic epic) {
+        if (!epic.getSubtaskId().isEmpty() && epic.getStartTime() != null) {
+            return epic.getId() + ",EPIC, "
+                    + epic.getStatus() + ", "
+                    + epic.getTitle() + ", "
+                    + epic.getDescription() + ", "
+                    + epic.getStartTime() + ", "
+                    + epic.getDuration() + ", "
+                    + epic.getEndTime() + ",\n";
+        } else return epic.getId() + ",EPIC, "
+                + epic.getStatus() + ", "
+                + epic.getTitle() + ", "
+                + epic.getDescription()
+                + ",n/a,n/a,n/a,\n";
+    }
+
+    public String subtaskDateToString(Subtask subtask) {
+        if (subtask.getStartTime() == null) {
+            return subtask.getId() + ",SUBTASK, "
+                    + subtask.getStatus() + ", "
+                    + subtask.getTitle() + ", "
+                    + subtask.getDescription() + ", "
+                    + subtask.getEpicId() + ", "
+                    + ",n/a,n/a,n/a,\n";
+        } else
+            return subtask.getId() + ",SUBTASK, "
+                    + subtask.getStatus() + ", "
+                    + subtask.getTitle() + ", "
+                    + subtask.getDescription() + ", "
+                    + subtask.getEpicId() + ", "
+                    + subtask.getStartTime() + ", "
+                    + subtask.getDuration() + ", "
+                    + subtask.getEndTime() + ",\n";
     }
 
     @Override

@@ -47,11 +47,11 @@ public class InMemoryHistoryManager implements HistoryManager {
             if (head == null) {
                 tail = newNode; // присваивание хвосту узел
                 head = newNode; // присваивание голове узел
-                newNode.setNext(null); // ссылка на слудующий узел пустая
+                newNode.setNext(null); // ссылка на следующий узел пустая
                 newNode.setPrev(null); // ссылка на предыдущий узел пустая
             } else {
                 newNode.setPrev(tail); // меняется ссылка на предыдущий узел
-                newNode.setNext(null); // ссылка на слудующий узел пустая
+                newNode.setNext(null); // ссылка на следующий узел пустая
                 tail.setNext(newNode); // меняется ссылка хвоста на новый узел
                 tail = newNode; // обновление хвоста
             }
@@ -67,6 +67,7 @@ public class InMemoryHistoryManager implements HistoryManager {
                 taskList.add(nodePart.getTask());
                 nodePart = nodePart.getNext();
             }
+
             return taskList;
         }
 
