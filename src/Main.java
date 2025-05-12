@@ -32,6 +32,7 @@ public class Main {
             System.out.println(task);
         }
     }
+
     public static void printPrioritizedTasks(InMemoryTaskManager manager) {
         for (Task task : manager.getPrioritizedTasks()) {
             System.out.println(task);
