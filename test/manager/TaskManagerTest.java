@@ -208,6 +208,7 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         manager.getTaskById(task.getId());
         Epic epic = createEpic();
         manager.createEpic(epic);
+        manager.getEpicById(epic.getId());
         Subtask subtask = createSubtask(epic);
         manager.createSubtask(subtask);
         manager.getSubtaskByID((subtask.getId()));
