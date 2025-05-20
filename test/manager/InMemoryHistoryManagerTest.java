@@ -88,7 +88,7 @@ public class InMemoryHistoryManagerTest {
         List<Task> history = historyManager.getHistory();
 
         assertEquals(1, history.size());
-        assertEquals(task1.getTitle(), history.get(0).getTitle());
+        assertEquals(task1.getTitle(), history.getFirst().getTitle());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class InMemoryHistoryManagerTest {
         List<Task> history = historyManager.getHistory();
 
         assertEquals(1, history.size());
-        assertEquals(epic1.getTitle(), history.get(0).getTitle());
+        assertEquals(epic1.getTitle(), history.getFirst().getTitle());
     }
 
     @Test
@@ -106,6 +106,6 @@ public class InMemoryHistoryManagerTest {
         List<Task> history = historyManager.getHistory();
 
         assertEquals(1, history.size());
-        assertEquals(subtask.getTitle(), history.get(0).getTitle());
+        assertEquals(subtask.getTitle(), history.getFirst().getTitle());
     }
 }
