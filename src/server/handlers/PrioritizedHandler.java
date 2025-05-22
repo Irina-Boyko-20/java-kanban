@@ -13,6 +13,7 @@ public class PrioritizedHandler extends BaseHttpHandler {
     public PrioritizedHandler(TaskManager manager) {
         this.manager = manager;
     }
+    
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
