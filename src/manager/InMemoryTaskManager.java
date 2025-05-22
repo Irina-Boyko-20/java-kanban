@@ -1,5 +1,6 @@
 package manager;
 
+import exception.NotFoundException;
 import exception.TimeConfirmException;
 import models.*;
 
@@ -87,30 +88,33 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Task getTaskById(int id) {
         Task task = tasks.get(id);
-        if (task != null) {
-            historyManager.add(tasks.get(id));
+        if (task == null) {
+            throw new NotFoundException("Задача с ID " + id + " не найдена");
         }
 
+        historyManager.add(tasks.get(id));
         return tasks.get(id);
     }
 
     @Override
     public Epic getEpicById(int id) {
         Epic epic = epics.get(id);
-        if (epic != null) {
-            historyManager.add(epics.get(id));
+        if (epic == null) {
+            throw new NotFoundException("Epic с ID " + id + " не найден");
         }
 
+        historyManager.add(epics.get(id));
         return epics.get(id);
     }
 
     @Override
     public Subtask getSubtaskByID(int id) {
         Subtask subtask = subtasks.get(id);
-        if (subtask != null) {
-            historyManager.add(subtasks.get(id));
+        if (subtask == null) {
+            throw new NotFoundException("Подзадача с ID " + id + " не найдена");
         }
 
+        historyManager.add(subtasks.get(id));
         return subtasks.get(id);
     }
 
