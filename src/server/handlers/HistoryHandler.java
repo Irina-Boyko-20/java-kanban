@@ -23,7 +23,7 @@ public class HistoryHandler extends BaseHttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
 
-        System.out.println("Обрабатывается запрос " + path + " с методом " + method);
+        System.out.printf("Обрабатывается запрос %s с методом %s", path, method);
 
         Collection<Task> history = manager.getHistory();
         if (history.isEmpty()) {

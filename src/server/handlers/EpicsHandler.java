@@ -24,20 +24,13 @@ public class EpicsHandler extends BaseHttpHandler {
             String path = exchange.getRequestURI().getPath();
             pathParts = path.split("/");
 
-            System.out.println("Обрабатывается запрос " + path + " с методом " + method);
+            System.out.printf("Обрабатывается запрос %s с методом %s", path, method);
 
             switch (method) {
-                case "GET":
-                    handleGet(exchange);
-                    break;
-                case "POST":
-                    handlePost(exchange);
-                    break;
-                case "DELETE":
-                    handleDelete(exchange);
-                    break;
-                default:
-                    writeResponse(exchange, "Некорректный запрос", 404);
+                case "GET" -> handleGet(exchange);
+                case "POST" -> handlePost(exchange);
+                case "DELETE" -> handleDelete(exchange);
+                default -> writeResponse(exchange, "Некорректный запрос", 404);
             }
 
         } catch (Exception e) {
@@ -62,7 +55,7 @@ public class EpicsHandler extends BaseHttpHandler {
                     String json = gson.toJson(manager.getSubtasksByEpicId(id));
                     sendText(exchange, json);
                 } else {
-                    sendNotFound(exchange, "Epic с идентификатором " + id + " отсутствует. Попробуйте снова!");
+                    sendNotFound(exchange, String.format("Epic с идентификатором %d отсутствует. Попробуйте снова!", id));
                 }
             }
         } catch (NumberFormatException e) {

@@ -284,7 +284,6 @@ public class HttpTaskServerTest {
 
         client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Пытаемся создать задачу с пересекающимся временем
         Task task2 = new Task("Task2", "Description", "18:30 01.01.2023", "30");
         taskJson = gson.toJson(task2);
 
@@ -295,6 +294,6 @@ public class HttpTaskServerTest {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(406, response.statusCode()); // 406 Not Acceptable
+        assertEquals(406, response.statusCode());
     }
 }

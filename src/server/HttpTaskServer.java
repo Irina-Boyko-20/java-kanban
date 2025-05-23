@@ -56,6 +56,14 @@ public class HttpTaskServer {
         HttpTaskServer server = new HttpTaskServer(taskManagers);
         server.start();
 
-        //server.stop();
+        new Thread(() -> {
+            try {
+                Thread.sleep(600000);
+                server.stop();
+                System.out.println("Сервер был автоматически остановлен через 10 минут");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

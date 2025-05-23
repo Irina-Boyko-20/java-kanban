@@ -25,20 +25,13 @@ public class SubtasksHandler extends BaseHttpHandler {
             String path = exchange.getRequestURI().getPath();
             pathParts = path.split("/");
 
-            System.out.println("Обрабатывается запрос " + path + " с методом " + method);
+            System.out.printf("Обрабатывается запрос %s с методом %s", path, method);
 
             switch (method) {
-                case "GET":
-                    handleGet(exchange);
-                    break;
-                case "POST":
-                    handlePost(exchange);
-                    break;
-                case "DELETE":
-                    handleDelete(exchange);
-                    break;
-                default:
-                    writeResponse(exchange, "Некорректный запрос", 404);
+                case "GET" -> handleGet(exchange);
+                case "POST" -> handlePost(exchange);
+                case "DELETE" -> handleDelete(exchange);
+                default -> writeResponse(exchange, "Некорректный запрос", 404);
             }
 
         } catch (Exception e) {
