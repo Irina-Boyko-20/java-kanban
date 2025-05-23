@@ -184,7 +184,6 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         manager.createTask(task);
         manager.deleteTask(task.getId());
 
-        //assertNull(manager.getTaskById(task.getId()));
         assertThrows(NotFoundException.class, () -> {
             manager.getTaskById(task.getId());
         });

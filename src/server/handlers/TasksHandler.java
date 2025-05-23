@@ -42,12 +42,19 @@ public class TasksHandler extends BaseHttpHandler {
 
     private void handleGet(HttpExchange exchange) throws IOException {
         if (pathParts.length == 3) {
+            String idS = pathParts[2];
             try {
                 int id = Integer.parseInt(pathParts[2]);
                 String json = gson.toJson(manager.getTaskById(id));
                 sendText(exchange, json);
             } catch (NumberFormatException e) {
-                writeResponse(exchange, "Неверный формат id. Попробуйте ещё раз!", 400);
+                writeResponse(exchange,
+                        String.format(
+                                "Неверный формат id - %s. Попробуйте ещё раз! Нужно ввести целое число!",
+                                idS
+                        ),
+                        400
+                );
             } catch (NotFoundException exception) {
                 sendNotFound(exchange, exception.getMessage());
             }
@@ -81,11 +88,18 @@ public class TasksHandler extends BaseHttpHandler {
 
     private void handleDelete(HttpExchange exchange) throws IOException {
         if (pathParts.length == 3) {
+            String idS = pathParts[2];
             try {
                 manager.deleteTask(Integer.parseInt(pathParts[2]));
                 sendText(exchange, "Задача успешно удалена");
             } catch (NumberFormatException e) {
-                writeResponse(exchange, "Неверный формат id. Попробуйте ещё раз!", 400);
+                writeResponse(exchange,
+                        String.format(
+                                "Неверный формат id - %s. Попробуйте ещё раз! Нужно ввести целое число!",
+                                idS
+                        ),
+                        400
+                );
             }
         } else {
             writeResponse(exchange, "Не указан id задачи", 400);

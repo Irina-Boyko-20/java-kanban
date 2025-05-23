@@ -89,7 +89,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Task getTaskById(int id) {
         Task task = tasks.get(id);
         if (task == null) {
-            throw new NotFoundException(String.format("Задача с ID %d не найден", id));
+            throw new NotFoundException(String.format("Задача с ID %d не найдена", id));
         }
 
         historyManager.add(tasks.get(id));
@@ -111,7 +111,7 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask getSubtaskByID(int id) {
         Subtask subtask = subtasks.get(id);
         if (subtask == null) {
-            throw new NotFoundException(String.format("Подзадача с ID %d не найден", id));
+            throw new NotFoundException(String.format("Подзадача с ID %d не найдена", id));
         }
 
         historyManager.add(subtasks.get(id));

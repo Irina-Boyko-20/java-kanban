@@ -40,15 +40,18 @@ public class EpicsHandler extends BaseHttpHandler {
     }
 
     private void handleGet(HttpExchange exchange) throws IOException {
+        String idS = "";
         try {
             if (pathParts.length == 2) {
                 String json = gson.toJson(manager.getAllEpics());
                 sendText(exchange, json);
             } else if (pathParts.length == 3) {
+                idS = pathParts[2];
                 int id = Integer.parseInt(pathParts[2]);
                 String json = gson.toJson(manager.getEpicById(id));
                 sendText(exchange, json);
             } else if (pathParts.length == 4) {
+                idS = pathParts[2];
                 int id = Integer.parseInt(pathParts[2]);
 
                 if (manager.getSubtasksByEpicId(id) != null) {
@@ -59,7 +62,13 @@ public class EpicsHandler extends BaseHttpHandler {
                 }
             }
         } catch (NumberFormatException e) {
-            writeResponse(exchange, "Неверный формат id. Попробуйте ещё раз!", 400);
+            writeResponse(exchange,
+                    String.format(
+                            "Неверный формат id - %s. Попробуйте ещё раз! Нужно ввести целое число!",
+                            idS
+                    ),
+                    400
+            );
         } catch (NotFoundException exception) {
             sendNotFound(exchange, exception.getMessage());
         }
@@ -79,11 +88,18 @@ public class EpicsHandler extends BaseHttpHandler {
 
     private void handleDelete(HttpExchange exchange) throws IOException {
         if (pathParts.length == 3) {
+            String idS = pathParts[2];
             try {
                 manager.deleteEpic(Integer.parseInt(pathParts[2]));
                 sendText(exchange, "Подзадача успешно удалена");
             } catch (NumberFormatException e) {
-                writeResponse(exchange, "Неверный формат id. Попробуйте ещё раз!", 400);
+                writeResponse(exchange,
+                        String.format(
+                                "Неверный формат id - %s. Попробуйте ещё раз! Нужно ввести целое число!",
+                                idS
+                        ),
+                        400
+                );
             }
         } else {
             writeResponse(exchange, "Не указан id epic", 400);
