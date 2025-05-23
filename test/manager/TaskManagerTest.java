@@ -1,5 +1,6 @@
 package manager;
 
+import exception.NotFoundException;
 import exception.TimeConfirmException;
 import models.Epic;
 import models.Subtask;
@@ -183,7 +184,9 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         manager.createTask(task);
         manager.deleteTask(task.getId());
 
-        assertNull(manager.getTaskById(task.getId()));
+        assertThrows(NotFoundException.class, () -> {
+            manager.getTaskById(task.getId());
+        });
     }
 
     @Test
@@ -195,8 +198,14 @@ public abstract class TaskManagerTest<T extends TaskManager> {
         manager.createSubtask(subtask);
         manager.deleteEpic(epic.getId());
 
-        assertNull(manager.getEpicById(epic.getId()));
-        assertNull(manager.getSubtaskByID(subtask.getId()));
+        //assertNull(manager.getEpicById(epic.getId()));
+        //assertNull(manager.getSubtaskByID(subtask.getId()));
+        assertThrows(NotFoundException.class, () -> {
+            manager.getTaskById(epic.getId());
+        });
+        assertThrows(NotFoundException.class, () -> {
+            manager.getTaskById(subtask.getId());
+        });
         assertEquals(0, manager.getHistory().size());
     }
 
